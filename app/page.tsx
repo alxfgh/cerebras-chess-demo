@@ -91,7 +91,7 @@ export default function HomePage() {
                 Code
               </h4>
               <a
-                href="#"
+                href="https://github.com/alxfgh/cerebras-chess-demo"
                 className="text-blue-400 hover:text-cyan-400 transition-colors flex items-center gap-2"
               >
                 <Github className="w-4 h-4" />
