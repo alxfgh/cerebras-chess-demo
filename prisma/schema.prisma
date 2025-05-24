@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model ChessGame {
+  id          String   @id @default(cuid())
+  player1     String   // Model name (e.g., "cerebras/llama3.1-8b-instruct")
+  player2     String   // Model name (e.g., "anthropic/claude-3-haiku")
+  winner      String?  // "player1", "player2", "draw", or null for unfinished
+  moves       String   // JSON string of moves
+  moveDetails String?  // JSON string of detailed move analysis
+  gameState   String   // Current game state (FEN notation)
+  status      String   // "ongoing", "completed", "error", "abandoned"
+  pgn         String?  // Generated PGN notation
+  lichessUrl  String?  // Analysis URL for Lichess
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+  lastMoveAt  DateTime? // Track when the last move was made
+  totalMoves  Int      @default(0) // Number of moves made
+  isAbandoned Boolean  @default(false) // Flag for abandoned games
+  errorReason String?  // Reason for error/abandonment
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("chess_games")
+}
+
+model ModelMatch {
+  id            String   @id @default(cuid())
+  specHash      String   // SHA-1 hash of the input specification
+  taskType      String   // "chip-rtl", "photonic", "general"
+  specification String   // Original input specification
+  model1Name    String   // Cerebras model name
+  model2Name    String   // Reference model name
+  model1Answer  String   // Model 1's response
+  model2Answer  String   // Model 2's response
+  model1Metrics String   // JSON: latency, tokens, cost
+  model2Metrics String   // JSON: latency, tokens, cost
+  model1Score   Int?     // 1-5 rating
+  model2Score   Int?     // 1-5 rating
+  evaluationPrompt String? // The prompt used for evaluation
+  createdAt     DateTime @default(now())
+
+  @@map("model_matches")
+} 
