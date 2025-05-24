@@ -114,7 +114,7 @@ export default function HomePage() {
 
           <div className="space-y-4 text-slate-300 leading-relaxed">
             <p>
-              I built a web portal to compare different large language models
+              I built a website to compare different large language models
               (LLMs) and providers using a standardized task: playing chess.
               This site is built with next.js for the frontend and backend,
               chess.js for move logic and openrouter for flexible LLM selection.
